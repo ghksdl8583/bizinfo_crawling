@@ -19,19 +19,10 @@ jobs:
       with:
         python-version: "3.9"
 
-    - name: Install dependencies
-      run: pip install -r requirements.txt
-
     - name: Install Chrome and ChromeDriver
-      run: sudo apt-get install -y chromium-browser chromium-chromedriver
-
-    - name: Remove existing ChromeDriver link (if any)
       run: |
-        sudo rm -f /usr/bin/chromedriver
-
-    - name: Create a new ChromeDriver symbolic link
-      run: |
-        sudo ln -s /usr/lib/chromium-browser/chromedriver /usr/bin/chromedriver
+        sudo apt-get update
+        sudo apt-get install -y chromium-browser chromium-chromedriver
 
     - name: Execute crawling script
       env:
