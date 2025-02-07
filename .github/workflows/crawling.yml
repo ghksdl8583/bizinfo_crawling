@@ -3,6 +3,7 @@ name: BizInfo Crawling Automation
 on:
   schedule:
     - cron: "0 0 * * *"  # 매일 오전 9시 (한국 시간)
+  workflow_dispatch:      # 수동 실행 이벤트 추가
 
 jobs:
   bizinfo-crawling:
