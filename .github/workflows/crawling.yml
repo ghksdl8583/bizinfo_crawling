@@ -1,3 +1,10 @@
+name: BizInfo Crawling
+
+on:
+  workflow_dispatch:  # 수동 트리거 설정
+  schedule:
+    - cron: "0 0 * * *"  # 매일 자정 실행
+
 jobs:
   bizinfo-crawling:
     runs-on: ubuntu-latest
