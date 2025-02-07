@@ -2,8 +2,8 @@ import os
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.support.ui import WebDriverWait  # 추가된 부분
-from selenium.webdriver.support import expected_conditions as EC  # 추가된 부분
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 from datetime import datetime, timedelta
@@ -54,8 +54,8 @@ def fetch_bizinfo(url):
             if 등록일 in [today, yesterday]:
                 projects.append({
                     "지원분야": 지원분야,
-                    "지원사업명": 지원사업명_링크,
-                    "링크": 지원사업명,
+                    "지원사업명": 지원사업명,
+                    "링크": 지원사업명_링크,
                     "신청기간": 신청기간,
                     "소관부처": 소관부처,
                     "사업수행기관": 사업수행기관,
@@ -64,7 +64,7 @@ def fetch_bizinfo(url):
 
     return projects
 
-# HTML 테이블 생성 함수 (동일)
+# HTML 테이블 생성 함수
 def create_html_table(projects, region_name):
     if not projects:
         return f"<h3>{region_name} 공고: 없음</h3>"
@@ -73,12 +73,12 @@ def create_html_table(projects, region_name):
     table_html += "<tr><th>지원분야</th><th>지원사업명</th><th>신청기간</th><th>소관부처</th><th>사업수행기관</th><th>등록일</th></tr>"
 
     for project in projects:
-        지원사업명_링크 = f'<a href="{project["링크"]}">{project["지원사업명"]}</a>'
+        지원사업명_링크 = f'<a href="{project["링크"]}" target="_blank">{project["지원사업명"]}</a>'
+        
         table_html += f"""
             <tr>
                 <td>{project['지원분야']}</td>
-                <td>{project['지원사업명']}</td>
-                <td><{지원사업명_링크}></td>
+                <td>{지원사업명_링크}</td>
                 <td>{project['신청기간']}</td>
                 <td>{project['소관부처']}</td>
                 <td>{project['사업수행기관']}</td>
@@ -88,10 +88,12 @@ def create_html_table(projects, region_name):
     table_html += "</table><br>"
     return table_html
 
-# 메일 보내기 함수 (동일)
-def send_email(jeonnam_html, central_gov_html, recipient_email):
-    sender_email = "ghksdl8583@gmail.com"  # 본인 이메일 주소 입력
-    sender_password = "eepf eajb rgot oyen"  # 앱 비밀번호 설정 필요 (Gmail 기준)
+# 메일 보내기 함수
+def send_email(jeonnam_html, central_gov_html):
+    # 환경 변수에서 이메일 정보 불러오기
+    sender_email = os.getenv("GMAIL_EMAIL")
+    sender_password = os.getenv("GMAIL_PASSWORD")
+    recipient_email = os.getenv("RECIPIENT_EMAIL")
 
     msg = MIMEMultipart("alternative")
     msg["From"] = sender_email
@@ -155,8 +157,7 @@ if __name__ == "__main__":
     jeonnam_html = create_html_table(jeonnam_projects, "전남 지역")
     central_gov_html = create_html_table(central_projects, "중앙부처")
 
-    # 메일 발송 설정 (받는 사람의 이메일 입력)
-    recipient_email = "swi3301@seowooin.com"
-    send_email(jeonnam_html, central_gov_html, recipient_email)
+    # 메일 발송
+    send_email(jeonnam_html, central_gov_html)
 
     driver.quit()
