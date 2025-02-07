@@ -8,12 +8,12 @@ from email.mime.text import MIMEText
 
 # ChromeDriver 설정
 chrome_options = Options()
-chrome_options.add_argument("--headless")  # 화면 없이 실행
+chrome_options.add_argument("--headless")
 chrome_options.add_argument("--no-sandbox")
 chrome_options.add_argument("--disable-dev-shm-usage")
 
-# 시스템 환경에서 chromedriver 위치 자동 탐색
-service = Service("/usr/lib/chromium-browser/chromedriver")  # 일반적인 Ubuntu 경로
+# chromedriver 경로 설정 (Actions에서 다운로드한 경로)
+service = Service("./chromedriver.exe")
 driver = webdriver.Chrome(service=service, options=chrome_options)
 
 # 날짜 설정 (오늘과 어제)
