@@ -1,9 +1,9 @@
 name: BizInfo Crawling
 
 on:
-  workflow_dispatch:  # 수동 트리거 설정
+  workflow_dispatch:
   schedule:
-    - cron: "0 0 * * *"  # 매일 자정 실행
+    - cron: "0 0 * * *"
 
 jobs:
   bizinfo-crawling:
@@ -12,16 +12,6 @@ jobs:
     steps:
       - name: Check out the repository
         uses: actions/checkout@v3
-
-      - name: Install latest version of Chrome
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y google-chrome-stable
-
-      - name: Download ChromeDriver
-        run: |
-          wget "https://github.com/ghksdl8583/bizinfo_crawling/releases/download/v1.0.0/chromedriver" -O ./chromedriver
-          chmod +x ./chromedriver
 
       - name: Set up Python
         uses: actions/setup-python@v4
