@@ -12,8 +12,8 @@ chrome_options.add_argument("--headless")  # 화면 없이 실행
 chrome_options.add_argument("--no-sandbox")
 chrome_options.add_argument("--disable-dev-shm-usage")
 
-# Ubuntu 기본 경로로 설정
-service = Service("/usr/bin/chromedriver")
+# 시스템 환경에서 chromedriver 위치 자동 탐색
+service = Service("/usr/lib/chromium-browser/chromedriver")  # 일반적인 Ubuntu 경로
 driver = webdriver.Chrome(service=service, options=chrome_options)
 
 # 날짜 설정 (오늘과 어제)
