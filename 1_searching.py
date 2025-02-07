@@ -1,18 +1,19 @@
-from datetime import datetime, timedelta
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
+from datetime import datetime, timedelta
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 # ChromeDriver 설정
 chrome_options = Options()
-chrome_options.add_argument("--headless")
+chrome_options.add_argument("--headless")  # 헤드리스 모드
 chrome_options.add_argument("--no-sandbox")
 chrome_options.add_argument("--disable-dev-shm-usage")
 
-# chromedriver 경로 설정 (Actions에서 다운로드한 경로)
+# 크롬드라이버 다운로드 후 동적으로 사용
 service = Service("./chromedriver.exe")
 driver = webdriver.Chrome(service=service, options=chrome_options)
 
