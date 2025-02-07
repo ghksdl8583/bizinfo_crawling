@@ -13,9 +13,9 @@ jobs:
       - name: Check out the repository
         uses: actions/checkout@v3
 
-      - name: Download ChromeDriver with authentication
+      - name: Download ChromeDriver with debug
         run: |
-          wget --header="Authorization: token ${{ secrets.GH_TOKEN }}" https://github.com/ghksdl8583/bizinfo_crawling/releases/download/v1.0.0/chromedriver.exe
+          wget --header="Authorization: token ${{ secrets.GH_TOKEN }}" "https://github.com/ghksdl8583/bizinfo_crawling/releases/download/v1.0.0/chromedriver.exe" -O ./chromedriver.exe --debug
 
       - name: Set up Python
         uses: actions/setup-python@v4
