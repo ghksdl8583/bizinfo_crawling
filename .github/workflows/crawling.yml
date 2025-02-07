@@ -24,16 +24,15 @@ jobs:
     - name: Install Chrome and ChromeDriver
       run: |
         sudo apt-get update
-        sudo apt-get install -y google-chrome-stable
-        sudo apt-get install -y chromium-chromedriver
+        sudo apt-get install -y chromium-browser chromium-chromedriver
+        sudo ln -s /usr/lib/chromium-browser/chromedriver /usr/bin/chromedriver  # 경로 설정
 
-    - name: Set ChromeDriver PATH
-      run: |
-        echo 'export PATH=$PATH:/usr/lib/chromium-browser/' >> $GITHUB_ENV
-
-    - name: Execute crawling script
+    - name: Run crawling script
       env:
         GMAIL_EMAIL: ${{ secrets.GMAIL_EMAIL }}
         GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
         RECIPIENT_EMAIL: ${{ secrets.RECIPIENT_EMAIL }}
-      run: python 1_searching.py
+      run: |
+        echo "ChromeDriver 버전 확인:"
+        chromedriver --version
+        python 1_searching.py
