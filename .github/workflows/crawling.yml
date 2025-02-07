@@ -19,10 +19,9 @@ jobs:
       with:
         python-version: "3.9"
 
-    - name: Download ChromeDriver from GitHub Release
-      run: |
-        wget https://github.com/ghksdl8583r/bizinfo_crawling/releases/download/v1.0.0/chromedriver.exe -O ./chromedriver.exe
-        chmod +x ./chromedriver.exe  # 실행 권한 부여
+- name: Download ChromeDriver
+  run: wget --auth-no-challenge --header='Authorization: token ${{ secrets.GITHUB_TOKEN }}' \
+    https://github.com/ghksdl8583r/bizinfo_crawling/releases/download/v1.0.0/chromedriver.exe -O ./chromedriver.exe
 
     - name: Execute crawling script
       env:
