@@ -59,7 +59,6 @@ def fetch_bizinfo(url):
                     "소관부처": 소관부처,
                     "사업수행기관": 사업수행기관,
                     "등록일": 등록일,
-                    "링크": 지원사업명_링크
                 })
 
     return projects
@@ -70,14 +69,15 @@ def create_html_table(projects, region_name):
         return f"<h3>{region_name} 공고: 없음</h3>"
 
     table_html = f"<h3>{region_name} 지원사업 공고</h3><table border='1' style='border-collapse: collapse; width: 100%;'>"
-    table_html += "<tr><th>지원분야</th><th>지원사업명</th><th>링크</th><th>신청기간</th><th>소관부처</th><th>사업수행기관</th><th>등록일</th></tr>"
+    table_html += "<tr><th>지원분야</th><th>지원사업명</th><th>신청기간</th><th>소관부처</th><th>사업수행기관</th><th>등록일</th></tr>"
 
     for project in projects:
+        지원사업명_링크 = f'<a href="{project["링크"]}">{project["지원사업명"]}</a>'
         table_html += f"""
             <tr>
                 <td>{project['지원분야']}</td>
                 <td>{project['지원사업명']}</td>
-                <td><a href="{project['링크']}">링크</a></td>
+                <td><{지원사업명_링크}"></td>
                 <td>{project['신청기간']}</td>
                 <td>{project['소관부처']}</td>
                 <td>{project['사업수행기관']}</td>
