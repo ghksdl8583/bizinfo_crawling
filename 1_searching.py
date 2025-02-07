@@ -89,7 +89,7 @@ def create_html_table(projects, region_name):
     return table_html
 
 # 메일 보내기 함수
-def send_email(jeonnam_html, central_gov_html):
+def send_email(jeonnam_html, central_gov_html, recipient_email):
     # 환경 변수에서 이메일 정보 불러오기
     sender_email = os.getenv("GMAIL_EMAIL")
     sender_password = os.getenv("GMAIL_PASSWORD")
@@ -158,6 +158,6 @@ if __name__ == "__main__":
 
     # 메일 발송
     recipient_email = os.getenv("RECIPIENT_EMAIL")
-    send_email(jeonnam_html, central_gov_html)
+    send_email(jeonnam_html, central_gov_html, recipient_email)
 
     driver.quit()
