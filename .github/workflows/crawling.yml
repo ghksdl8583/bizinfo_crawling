@@ -1,31 +1,33 @@
-name: BizInfo Crawling Automation
+name: BizInfo Crawling
 
 on:
+  workflow_dispatch:  # 수동 트리거 설정
   schedule:
-    - cron: "0 0 * * *"  # 매일 오전 9시 (한국 시간)
-
-  workflow_dispatch:  # 수동 실행 지원
+    - cron: "0 0 * * *"  # 매일 자정 실행
 
 jobs:
   bizinfo-crawling:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Check out the repository
-      uses: actions/checkout@v3
+      - name: Check out the repository
+        uses: actions/checkout@v3
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: "3.9"
+      - name: Download ChromeDriver from release
+        run: |
+          wget https://github.com/ghksdl8583r/bizinfo_crawling/releases/download/v1.0.0/chromedriver.exe -O ./chromedriver.exe
+          chmod +x ./chromedriver
 
-- name: Download ChromeDriver
-  run: wget --auth-no-challenge --header='Authorization: token ${{ secrets.GITHUB_TOKEN }}' \
-    https://github.com/ghksdl8583r/bizinfo_crawling/releases/download/v1.0.0/chromedriver.exe -O ./chromedriver.exe
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
 
-    - name: Execute crawling script
-      env:
-        GMAIL_EMAIL: ${{ secrets.GMAIL_EMAIL }}
-        GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
-        RECIPIENT_EMAIL: ${{ secrets.RECIPIENT_EMAIL }}
-      run: python 1_searching.py
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Execute crawling script
+        env:
+          GMAIL_EMAIL: ${{ secrets.GMAIL_EMAIL }}
+          GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
+        run: python 1_searching.py
