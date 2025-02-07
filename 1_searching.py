@@ -93,7 +93,6 @@ def send_email(jeonnam_html, central_gov_html):
     # 환경 변수에서 이메일 정보 불러오기
     sender_email = os.getenv("GMAIL_EMAIL")
     sender_password = os.getenv("GMAIL_PASSWORD")
-    recipient_email = os.getenv("RECIPIENT_EMAIL")
 
     msg = MIMEMultipart("alternative")
     msg["From"] = sender_email
@@ -158,6 +157,7 @@ if __name__ == "__main__":
     central_gov_html = create_html_table(central_projects, "중앙부처")
 
     # 메일 발송
+    recipient_email = os.getenv("RECIPIENT_EMAIL")
     send_email(jeonnam_html, central_gov_html)
 
     driver.quit()
