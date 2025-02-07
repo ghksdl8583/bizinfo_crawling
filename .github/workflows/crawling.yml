@@ -2,8 +2,8 @@ name: BizInfo Crawling Automation
 
 on:
   schedule:
-    - cron: "0 0 * * *"  # 매일 오전 9시 (한국 시간)
-  workflow_dispatch:  # 수동 실행 추가
+    - cron: "0 0 * * *"  # 매일 오전 9시 (한국 시간: 0 0 UTC)
+  workflow_dispatch:      # 수동 실행 가능
 
 jobs:
   bizinfo-crawling:
@@ -18,23 +18,15 @@ jobs:
       with:
         python-version: "3.9"
 
-    - name: Install Chrome and ChromeDriver
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y chromium-browser chromium-chromedriver
-        if [ ! -f /usr/bin/chromedriver ]; then
-          sudo ln -s $(which chromedriver) /usr/bin/chromedriver
-        else
-          echo "ChromeDriver 심볼릭 링크가 이미 존재합니다."
-        fi
-        ls -l /usr/bin/chromedriver  # 링크 확인
+    - name: Install dependencies
+      run: pip install -r requirements.txt
 
-    - name: Run crawling script
+    - name: Set CHROME_DRIVER_PATH
+      run: echo "CHROME_DRIVER_PATH=$(pwd)/drivers/chromedriver" >> $GITHUB_ENV
+
+    - name: Execute crawling script
       env:
         GMAIL_EMAIL: ${{ secrets.GMAIL_EMAIL }}
         GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
         RECIPIENT_EMAIL: ${{ secrets.RECIPIENT_EMAIL }}
-      run: |
-        echo "ChromeDriver 버전 확인:"
-        /usr/bin/chromedriver --version
-        python 1_searching.py
+      run: python 1_searching.py
