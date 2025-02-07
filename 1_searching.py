@@ -14,7 +14,7 @@ chrome_options.add_argument("--no-sandbox")
 chrome_options.add_argument("--disable-dev-shm-usage")
 
 # 크롬드라이버 다운로드 후 동적으로 사용
-service = Service("./chromedriver")
+service = Service("/usr/local/bin/chromedriver")
 driver = webdriver.Chrome(service=service, options=chrome_options)
 
 # 날짜 설정 (오늘과 어제)
