@@ -1,0 +1,28 @@
+name: BizInfo Crawling Automation
+
+on:
+  schedule:
+    - cron: "0 0 * * *"  # 매일 오전 9시 (한국 시간)
+
+jobs:
+  bizinfo-crawling:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out the repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.9"
+
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+
+    - name: Execute crawling script
+      env:
+        GMAIL_EMAIL: ${{ secrets.GMAIL_EMAIL }}
+        GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
+        RECIPIENT_EMAIL: ${{ secrets.RECIPIENT_EMAIL }}
+      run: python 1_searching.py
