@@ -1,8 +1,8 @@
 import os
 from selenium import webdriver
-from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service  # 올바르게 import 추가
 from selenium.webdriver.chrome.options import Options
-from webdriver_manager.chrome import ChromeDriverManager  # 자동 드라이버 매니저 사용
+from webdriver_manager.chrome import ChromeDriverManager
 from datetime import datetime, timedelta
 import smtplib
 from email.mime.multipart import MIMEMultipart
