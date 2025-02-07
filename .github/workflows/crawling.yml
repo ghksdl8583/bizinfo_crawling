@@ -3,7 +3,7 @@ name: BizInfo Crawling
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 0 * * *"
+    - cron: "0 0 * * *"  # 매일 오전 9시에 실행
 
 jobs:
   bizinfo-crawling:
@@ -25,5 +25,5 @@ jobs:
         env:
           GMAIL_EMAIL: ${{ secrets.GMAIL_EMAIL }}
           GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
-          RECIPENT_MAIL: ${{ secrets.RECIPENT_EMAIL }}
+          RECIPIENT_EMAIL: ${{ secrets.RECIPIENT_EMAIL }}
         run: python 1_searching.py
