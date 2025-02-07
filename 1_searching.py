@@ -77,7 +77,7 @@ def create_html_table(projects, region_name):
             <tr>
                 <td>{project['지원분야']}</td>
                 <td>{project['지원사업명']}</td>
-                <td><{지원사업명_링크}"></td>
+                <td><{지원사업명_링크}></td>
                 <td>{project['신청기간']}</td>
                 <td>{project['소관부처']}</td>
                 <td>{project['사업수행기관']}</td>
