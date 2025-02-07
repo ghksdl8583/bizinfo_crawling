@@ -19,11 +19,10 @@ jobs:
       with:
         python-version: "3.9"
 
-    - name: Install Chrome and ChromeDriver
+    - name: Download ChromeDriver from GitHub Release
       run: |
-        sudo apt-get update
-        sudo apt-get install -y chromium-browser chromium-chromedriver
-        sudo ln -sf /usr/lib/chromium-browser/chromedriver /usr/bin/chromedriver
+        wget https://github.com/your_username/your_repo/releases/download/v1.0.0/chromedriver.exe -O ./chromedriver.exe
+        chmod +x ./chromedriver.exe  # 실행 권한 부여
 
     - name: Execute crawling script
       env:
