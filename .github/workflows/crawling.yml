@@ -18,17 +18,12 @@ jobs:
       with:
         python-version: "3.9"
 
-    - name: Install dependencies
-      run: pip install -r requirements.txt
-
     - name: Install Chrome and ChromeDriver
       run: |
         sudo apt-get update
         sudo apt-get install -y chromium-browser chromium-chromedriver
-        if [ -f "/usr/bin/chromedriver" ]; then
-          sudo rm /usr/bin/chromedriver  # 기존 심볼릭 링크가 있으면 삭제
-        fi
-        sudo ln -s /usr/lib/chromium-browser/chromedriver /usr/bin/chromedriver  # 새로 심볼릭 링크 생성
+        which chromedriver || echo "ChromeDriver 설치 위치를 찾지 못했습니다."
+        sudo ln -sf $(which chromedriver) /usr/bin/chromedriver  # 정확한 위치로 심볼릭 링크 생성
 
     - name: Run crawling script
       env:
@@ -37,5 +32,5 @@ jobs:
         RECIPIENT_EMAIL: ${{ secrets.RECIPIENT_EMAIL }}
       run: |
         echo "ChromeDriver 버전 확인:"
-        chromedriver --version
+        /usr/bin/chromedriver --version  # 심볼릭 링크 위치로 확인
         python 1_searching.py
