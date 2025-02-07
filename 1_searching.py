@@ -1,14 +1,13 @@
-import os
 from datetime import datetime, timedelta
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-
-# ChromeDriver 경로 설정
-chrome_driver_path = os.path.join(os.getcwd(), "drivers", "chromedriver")
 
 # ChromeDriver 설정
 chrome_options = Options()
@@ -16,8 +15,8 @@ chrome_options.add_argument("--headless")  # 화면 없이 실행
 chrome_options.add_argument("--no-sandbox")
 chrome_options.add_argument("--disable-dev-shm-usage")
 
-# Service 설정
-service = Service(chrome_driver_path)
+# GitHub Actions용 경로 설정
+service = Service("/usr/bin/chromedriver")  # 시스템 경로에 설치된 드라이버 사용
 driver = webdriver.Chrome(service=service, options=chrome_options)
 
 # 날짜 설정 (오늘과 어제)
@@ -28,7 +27,7 @@ def fetch_bizinfo(url):
     driver.get(url)
     print("페이지 로드 중...")
 
-    # 테이블 로드 대기 시간 증가
+    # 테이블 로드 대기
     WebDriverWait(driver, 30).until(
         EC.presence_of_element_located((By.CSS_SELECTOR, "table tbody"))
     )
@@ -63,7 +62,7 @@ def fetch_bizinfo(url):
 
     return projects
 
-# HTML 테이블 생성 함수
+# HTML 테이블 생성 함수 (동일)
 def create_html_table(projects, region_name):
     if not projects:
         return f"<h3>{region_name} 공고: 없음</h3>"
@@ -86,7 +85,7 @@ def create_html_table(projects, region_name):
     table_html += "</table><br>"
     return table_html
 
-# 메일 보내기 함수
+# 메일 보내기 함수 (동일)
 def send_email(jeonnam_html, central_gov_html, recipient_email):
     sender_email = "ghksdl8583@gmail.com"  # 본인 이메일 주소 입력
     sender_password = "eepf eajb rgot oyen"  # 앱 비밀번호 설정 필요 (Gmail 기준)
