@@ -2,8 +2,8 @@ name: BizInfo Crawling Automation
 
 on:
   schedule:
-    - cron: "0 0 * * *"  # 매일 오전 9시 (한국 시간: 0 0 UTC)
-  workflow_dispatch:      # 수동 실행 가능
+    - cron: "0 0 * * *"  # 매일 오전 9시 (한국 시간 기준)
+  workflow_dispatch:  # 수동 실행 가능
 
 jobs:
   bizinfo-crawling:
@@ -21,12 +21,5 @@ jobs:
     - name: Install dependencies
       run: pip install -r requirements.txt
 
-    - name: Set CHROME_DRIVER_PATH
-      run: echo "CHROME_DRIVER_PATH=$(pwd)/drivers/chromedriver" >> $GITHUB_ENV
-
     - name: Execute crawling script
-      env:
-        GMAIL_EMAIL: ${{ secrets.GMAIL_EMAIL }}
-        GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
-        RECIPIENT_EMAIL: ${{ secrets.RECIPIENT_EMAIL }}
       run: python 1_searching.py
