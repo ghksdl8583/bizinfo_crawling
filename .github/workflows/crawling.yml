@@ -13,16 +13,15 @@ jobs:
       - name: Check out the repository
         uses: actions/checkout@v3
 
-      - name: Install Chrome (최신 버전)
+      - name: Install Latest Chrome 133
         run: |
           sudo apt-get update
           sudo apt-get install -y google-chrome-stable
 
-      - name: Download ChromeDriver from GitHub Release
+      - name: Download ChromeDriver 133 from Release
         run: |
-          wget --header="Authorization: token ${{ secrets.GH_TOKEN }}" "https://github.com/ghksdl8583/bizinfo_crawling/releases/download/v1.0.0/chromedriver" -O ./chromedriver
+          wget "https://github.com/ghksdl8583/bizinfo_crawling/releases/download/v1.0.0/chromedriver" -O ./chromedriver
           chmod +x ./chromedriver
-          sudo mv ./chromedriver /usr/local/bin/chromedriver
 
       - name: Set up Python
         uses: actions/setup-python@v4
