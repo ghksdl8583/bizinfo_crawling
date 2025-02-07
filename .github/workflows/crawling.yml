@@ -21,7 +21,7 @@ jobs:
 
     - name: Download ChromeDriver from GitHub Release
       run: |
-        wget https://github.com/your_username/your_repo/releases/download/v1.0.0/chromedriver.exe -O ./chromedriver.exe
+        wget https://github.com/ghksdl8583r/bizinfo_crawling/releases/download/v1.0.0/chromedriver.exe -O ./chromedriver.exe
         chmod +x ./chromedriver.exe  # 실행 권한 부여
 
     - name: Execute crawling script
