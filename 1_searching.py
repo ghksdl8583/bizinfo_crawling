@@ -1,20 +1,21 @@
 import os
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager  # 자동 드라이버 매니저 사용
 from datetime import datetime, timedelta
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
+# ChromeDriver 설정
 chrome_options = Options()
-chrome_options.add_argument("--headless")  # 화면 없이 실행
+chrome_options.add_argument("--headless")
 chrome_options.add_argument("--no-sandbox")
 chrome_options.add_argument("--disable-dev-shm-usage")
 
-# 크롬드라이버 경로 설정 (릴리즈에서 다운로드한 경로 사용)
-service = Service("./chromedriver")
-driver = webdriver.Chrome(service=service, options=chrome_options)
+# 자동으로 ChromeDriver 설치 및 설정
+driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
 
 # 날짜 설정 (오늘과 어제)
 today = datetime.now().strftime("%Y-%m-%d")
