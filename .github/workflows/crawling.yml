@@ -25,4 +25,5 @@ jobs:
         env:
           GMAIL_EMAIL: ${{ secrets.GMAIL_EMAIL }}
           GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
+          RECIPENT_MAIL: ${{ secrets.RECIPENT_EMAIL }}
         run: python 1_searching.py
