@@ -7,6 +7,9 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
+# ChromeDriver 경로 설정
+chrome_driver_path = os.path.join(os.getcwd(), "drivers", "chromedriver")
+
 # ChromeDriver 설정
 chrome_options = Options()
 chrome_options.add_argument("--headless")  # 화면 없이 실행
