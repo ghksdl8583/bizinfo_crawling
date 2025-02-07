@@ -22,8 +22,12 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y chromium-browser chromium-chromedriver
-        which chromedriver || echo "ChromeDriver 설치 위치를 찾지 못했습니다."
-        sudo ln -sf $(which chromedriver) /usr/bin/chromedriver  # 정확한 위치로 심볼릭 링크 생성
+        if [ ! -f /usr/bin/chromedriver ]; then
+          sudo ln -s $(which chromedriver) /usr/bin/chromedriver
+        else
+          echo "ChromeDriver 심볼릭 링크가 이미 존재합니다."
+        fi
+        ls -l /usr/bin/chromedriver  # 링크 확인
 
     - name: Run crawling script
       env:
@@ -32,5 +36,5 @@ jobs:
         RECIPIENT_EMAIL: ${{ secrets.RECIPIENT_EMAIL }}
       run: |
         echo "ChromeDriver 버전 확인:"
-        /usr/bin/chromedriver --version  # 심볼릭 링크 위치로 확인
+        /usr/bin/chromedriver --version
         python 1_searching.py
