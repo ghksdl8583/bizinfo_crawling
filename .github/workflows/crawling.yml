@@ -3,7 +3,7 @@ name: BizInfo Crawling Automation
 on:
   schedule:
     - cron: "0 0 * * *"  # 매일 오전 9시 (한국 시간)
-  workflow_dispatch:      # 수동 실행 이벤트 추가
+  workflow_dispatch:  # 수동 실행
 
 jobs:
   bizinfo-crawling:
@@ -20,6 +20,16 @@ jobs:
 
     - name: Install dependencies
       run: pip install -r requirements.txt
+
+    - name: Install Chrome and ChromeDriver
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y google-chrome-stable
+        sudo apt-get install -y chromium-chromedriver
+
+    - name: Set ChromeDriver PATH
+      run: |
+        echo 'export PATH=$PATH:/usr/lib/chromium-browser/' >> $GITHUB_ENV
 
     - name: Execute crawling script
       env:
