@@ -8,14 +8,15 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-# ChromeDriver 설정
+# Chrome 옵션 설정
 chrome_options = Options()
 chrome_options.add_argument("--headless")
 chrome_options.add_argument("--no-sandbox")
 chrome_options.add_argument("--disable-dev-shm-usage")
 
-# 자동으로 ChromeDriver 설치 및 설정
-driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
+# ChromeDriver 설정
+service = Service(ChromeDriverManager().install())
+driver = webdriver.Chrome(service=service, options=chrome_options)
 
 # 날짜 설정 (오늘과 어제)
 today = datetime.now().strftime("%Y-%m-%d")
