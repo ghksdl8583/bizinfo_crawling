@@ -13,7 +13,7 @@ from email.mime.text import MIMEText
 # ChromeDriver 설정
 chrome_options = Options()
 chrome_options.add_argument("--headless")  # 화면 없이 실행
-chromedriver_path = r"D:/0_programing/5_bizinfo_crawling/chromedriver-win64/chromedriver.exe"
+chromedriver_path = r"./drivers/chromedriver.exe"
 service = Service(chromedriver_path)
 driver = webdriver.Chrome(service=service, options=chrome_options)
 
