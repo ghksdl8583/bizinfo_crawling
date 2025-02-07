@@ -3,7 +3,8 @@ name: BizInfo Crawling Automation
 on:
   schedule:
     - cron: "0 0 * * *"  # 매일 오전 9시 (한국 시간)
-  workflow_dispatch:  # 수동 실행 추가
+
+  workflow_dispatch:  # 수동 실행 지원
 
 jobs:
   bizinfo-crawling:
@@ -13,14 +14,24 @@ jobs:
     - name: Check out the repository
       uses: actions/checkout@v3
 
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.9"
+
     - name: Install dependencies
       run: pip install -r requirements.txt
 
     - name: Install Chrome and ChromeDriver
+      run: sudo apt-get install -y chromium-browser chromium-chromedriver
+
+    - name: Remove existing ChromeDriver link (if any)
       run: |
-        sudo apt-get update
-        sudo apt-get install -y chromium-browser chromium-chromedriver
-        ln -s /usr/lib/chromium-browser/chromedriver /usr/bin/chromedriver  # 경로 설정
+        sudo rm -f /usr/bin/chromedriver
+
+    - name: Create a new ChromeDriver symbolic link
+      run: |
+        sudo ln -s /usr/lib/chromium-browser/chromedriver /usr/bin/chromedriver
 
     - name: Execute crawling script
       env:
