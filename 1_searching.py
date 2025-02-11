@@ -146,11 +146,14 @@ if __name__ == "__main__":
     jeonnam_url = "https://www.bizinfo.go.kr/web/lay1/bbs/S1T122C128/AS/74/list.do?hashCode=&rowsSel=6&rows=15&cpage=1&cat=&article_seq=&pblancId=&schJrsdCodeTy=&schWntyAt=&schAreaDetailCodes=6460000&schEndAt=N&orderGb=&sort=&condition=searchPblancNm&condition1=AND&preKeywords=&keyword="
     
     # 중앙부처 공고 URL
-    central_gov_url = "https://www.bizinfo.go.kr/web/lay1/bbs/S1T122C128/AS/74/list.do?hashCode=&rowsSel=6&rows=15&cpage=1&cat=&article_seq=&pblancId=&schJrsdCodeTy=2&schWntyAt=&schAreaDetailCodes=&schEndAt=N&orderGb=&sort=&condition=searchPblancNm&condition1=AND&preKeywords=&keyword="
+    central_gov_url_page1 = "https://www.bizinfo.go.kr/web/lay1/bbs/S1T122C128/AS/74/list.do?hashCode=&rowsSel=6&rows=15&cpage=1&cat=&article_seq=&pblancId=&schJrsdCodeTy=2&schWntyAt=&schAreaDetailCodes=&schEndAt=N&orderGb=&sort=&condition=searchPblancNm&condition1=AND&preKeywords=&keyword="
+    central_gov_url_page2 = "https://www.bizinfo.go.kr/web/lay1/bbs/S1T122C128/AS/74/list.do?hashCode=&rowsSel=6&cat=&article_seq=&pblancId=&schJrsdCodeTy=2&schWntyAt=&schAreaDetailCodes=&schEndAt=N&orderGb=&sort=&condition=searchPblancNm&condition1=AND&preKeywords=&keyword=&rows=15&cpage=2"
     
     # 전남 지역과 중앙부처 공고 크롤링
     jeonnam_projects = fetch_bizinfo(jeonnam_url)
-    central_projects = fetch_bizinfo(central_gov_url)
+    central_projects_page1 = fetch_bizinfo(central_gov_url_page1)
+    central_projects_page2 = fetch_bizinfo(central_gov_url_page2)
+    central_projects = central_projects_page1 + central_projects_page2
 
     # HTML 테이블 생성
     jeonnam_html = create_html_table(jeonnam_projects, "전남 지역")
